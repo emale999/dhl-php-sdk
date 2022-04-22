@@ -2,10 +2,8 @@
 /**
  * Author: Peter Dragicevic [peter@petschko.org]
  * Authors-Website: http://petschko.org/
- * Date: 26.01.2017
- * Time: 15:37
- * Update: 10.04.2017
- * Version: 1.3.0
+ * Date: 22.04.2022
+ * Version: 1.3.1 - Update von emale999
  *
  * Notes: Contains all Functions/Values for DHL-Business-Shipment
  */
@@ -62,7 +60,7 @@ class DHL_BusinessShipment extends DHL_Version {
 	/**
 	 * Newest-Version
 	 */
-	const NEWEST_VERSION = '2.2';
+	const NEWEST_VERSION = '3.1.2';
 
 	/**
 	 * Response-Type URL
@@ -285,7 +283,7 @@ class DHL_BusinessShipment extends DHL_Version {
 	private static function getWSDLDirURL() {
 		$path = (isset($_SERVER['HTTPS']) ? 'https' : 'http') . '://' . $_SERVER['HTTP_HOST'] . '/' .
 			trim(str_replace(str_replace('\\', '/', $_SERVER['DOCUMENT_ROOT']), '', str_replace('\\', '/', __DIR__)), '/') . '/lib/';
-
+//              $path = "../dhl/includes/lib/"; // Oder lieber relativer Pfad zum lib-Ordner
 		return (parse_url($path) === false) ? self::DHL_WSDL_LIB_URL : $path;
 	}
 
@@ -298,7 +296,6 @@ class DHL_BusinessShipment extends DHL_Version {
 		// Use own API-URL if set
 		if($this->getCustomAPIURL() !== null)
 			return $this->getCustomAPIURL();
-
 		// todo check if up to date & if file exists
 		return self::getWSDLDirURL() . $this->getVersion() . '/geschaeftskundenversand-api-' . $this->getVersion() . '.wsdl';
 	}
@@ -770,11 +767,15 @@ class DHL_BusinessShipment extends DHL_Version {
 		// Shipment
 		$data->ShipmentOrder->Shipment = new StdClass;
 		$data->ShipmentOrder->Shipment->ShipmentDetails = $this->getShipmentDetails()->getShipmentDetailsClass_v2();
+		
 
 		// Service
 		if($this->getService() !== null)
 			$data->ShipmentOrder->Shipment->ShipmentDetails->Service = $this->getService()->getServiceClass_v2($this->getShipmentDetails()->getProduct());
-
+		
+		if ($this->getSequenceNumber() !== null) // Die Referenznummer scheint in Version 3 wohl eher an dieser Stelle sein zu müssen -- emale999
+			$data->ShipmentOrder->Shipment->ShipmentDetails->customerReference = $this->getSequenceNumber();
+		
 		// Notification
 		if($this->getReceiverEmail() !== null) {
 			$data->ShipmentOrder->Shipment->ShipmentDetails->Notification = new StdClass;
