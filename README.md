@@ -2,20 +2,27 @@
 
 This *unofficial* library is wrapping some functions of the DHL SOAP API in order to easy create/delete shipments and labels.
 
+## emale999 Fork
+
+Die offizielle unoffizielle Library von aheidelberg funktionierte leider nicht mehr.
+Dieser Fork bringt die Library erstmal wieder zum Laufen. Dafür wurde die DHL WSDL in Version 3.1.2 hinzugefügt.
+Aber vielleicht ist https://github.com/HubertLohmaier74/DHL_entwicklerportal_api empfehlenswerter, da von Grund auf neu programmiert, auf einem aktuellen Stand und mit kleiner Beschreibung, wo man sich überhaupt überall registrieren muss. Die verschiedenen zu verwendenden Zugangsdaten von DHL sind nämlich ziemlich konfus.
+
 ## Motivation
 
 I had a lot of pain studying and programming the DHL SOAP API - just to wrap some bits in a lot of XML. There is a lot, but not very helpful, documentation to the API. So I decided to create some functions in an easy to use and understand library.
 
 There is also a lot of old stuff in the Documentation, so that you can not sure if it is right...
 
-## Requirements
+## DHL Accounts
 
-- You need a DHL developer account and - as long as you want to use the API in production systems - a DHL Intraship Account.
-- PHP-SOAP-Client installed + enabled on your Server
+- DHL Entwickler-Account https://entwickler.dhl.de/ und DHL Geschäftskunden Account https://geschaeftskunden.dhl.de
+- Im Entwickler-Account eine neue App anlegen https://entwickler.dhl.de/group/ep/myapps und auf Freigabe von Seitens DHL warten
+- Im DHL Geschäftskunden-Account am besten einen Systembenutzer hinzufügen, der die Rechte zum Versenden hat. Bei Systembenutzern läuft das Passwort nur 1x im Jahr ab
 
 ## Compatibility
 
-This Project is written for the DHL-SOAP-API **Version 2 or higher**.
+This Project is written for the DHL-SOAP-API **Version 3**.
 
 It barely supports Version 1, feel free to complete the missing functions for Version 1. They are named usually `{functionname}_v1`. They are also marked with "todo" if they are not implemented
 
@@ -43,11 +50,11 @@ I can't find a Documentation for Version 1 anymore, so its hard to implement the
 	$credentials = new DHL_Credentials();
 	
 	// Setup these Infos: (ALL Infos are Case-Sensitive!)
-	$credentials->setUser('Your-DHL-Account'); // DHL-Account (Same as if you Login with then to create Manual-Labels)
-	$credentials->setSignature('Your-DHL-Account-Password'); // DHL-Account-Password
+	$credentials->setUser('Your-DHL-Account'); // DHL-Account Benutzername vom Login in das Geschäftskundenportal (oder der angelegte Systembenutzer)
+	$credentials->setSignature('Your-DHL-Account-Password'); // Zugehöriges DHL-Account-Passwort
 	$credentials->setEpk('EPK-Account-Number'); // Number of your Account (Provide at least the first 10 digits)
-	$credentials->setApiUser('appId'); // Your Applications-ID (You can find it in your DHL-Dev-Account)
-	$credentials->setApiPassword('appToken'); // Your Applications-Token (You can find it also where you found the App-Id) 
+	$credentials->setApiUser('appId'); // AppID der im Entwicklungsportal angelegten App
+	$credentials->setApiPassword('appToken'); // Applications-Token (You can find it also where you found the App-Id) 
 ````
 
 You've set all of the Required Information so far. Now you can Perform several Actions.
