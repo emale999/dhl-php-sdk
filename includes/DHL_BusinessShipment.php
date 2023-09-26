@@ -776,11 +776,11 @@ class DHL_BusinessShipment extends DHL_Version {
 		if ($this->getSequenceNumber() !== null) // Die Referenznummer scheint in Version 3 wohl eher an dieser Stelle sein zu müssen -- emale999
 			$data->ShipmentOrder->Shipment->ShipmentDetails->customerReference = $this->getSequenceNumber();
 		
-		// Notification
-		if($this->getReceiverEmail() !== null) {
-			$data->ShipmentOrder->Shipment->ShipmentDetails->Notification = new StdClass;
-			$data->ShipmentOrder->Shipment->ShipmentDetails->Notification->recipientEmailAddress = $this->getReceiverEmail();
-		}
+		// Notification (Oktober 2023 von DHL außer Betrieb genommen)
+		//if($this->getReceiverEmail() !== null) {
+		//	$data->ShipmentOrder->Shipment->ShipmentDetails->Notification = new StdClass;
+		//	$data->ShipmentOrder->Shipment->ShipmentDetails->Notification->recipientEmailAddress = $this->getReceiverEmail();
+		//}
 
 		// Bank-Data
 		if($this->getBank() !== null)
@@ -791,6 +791,11 @@ class DHL_BusinessShipment extends DHL_Version {
 
 		// Receiver
 		$data->ShipmentOrder->Shipment->Receiver = $this->getReceiver()->getClass_v2();
+
+		// Notification (neu ab Oktober 2023)
+		if ($this->getReceiverEmail() !== null) { 
+			$data->ShipmentOrder->Shipment->Receiver->Communication->email = $this->getReceiverEmail();
+			}
 
 		// Return-Receiver
 		if($this->getReturnReceiver() !== null)
