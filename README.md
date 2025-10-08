@@ -8,7 +8,7 @@ Die offizielle unoffizielle Library von aheidelberg funktionierte leider nicht m
 Dieser Fork bringt die Library erstmal wieder zum Laufen. Dafür wurde die DHL WSDL in Version 3.1.2 hinzugefügt.
 Aber vielleicht ist https://github.com/HubertLohmaier74/DHL_entwicklerportal_api empfehlenswerter, da von Grund auf neu programmiert, auf einem aktuellen Stand und mit kleiner Beschreibung, wo man sich überhaupt überall registrieren muss. Die verschiedenen zu verwendenden Zugangsdaten von DHL sind nämlich ziemlich konfus.
 
-**ACHTUNG:** Zum Glück gibt es schon seit einer Weile eine REST-API. Diese SOAP-Schnittstelle ist inzwischen überflüssig und ab/seit März 2026 sogar abgeschaltet.
+**ACHTUNG:** Zum Glück gibt es schon seit einer Weile eine REST-API. Diese SOAP-Schnittstelle ist inzwischen überflüssig und ab/seit Juli 2026 sogar abgeschaltet.
 Obwohl dieser Fork also (demnächst) nicht mehr verwendet werden kann, lasse ich ihn trotzdem aktiv, falls jemand irgendwelche PHP-SOAP-Schnittstellen-Tipps sucht.
 
 ## Motivation
